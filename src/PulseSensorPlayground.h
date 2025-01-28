@@ -130,6 +130,8 @@
 #endif
 #include "utility/PulseSensorTimingStatistics.h"
 
+#include <Adafruit_ADS1X15.h>
+
 #define SAMPLE_RATE_500HZ 500
 #define SAMPLES_PER_SERIAL_SAMPLE 10
 
@@ -158,7 +160,7 @@ class PulseSensorPlayground {
        or
          PulseSensorPlayground pulse(2); // for 2 PulseSensors.
     */
-    PulseSensorPlayground(int numberOfSensors = 1);
+    PulseSensorPlayground(Adafruit_ADS1015* adc, int numberOfSensors = 1);
 
     /*
        Start reading and processing data from the PulseSensor(s).

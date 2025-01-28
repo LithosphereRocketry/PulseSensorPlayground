@@ -21,7 +21,7 @@
 class PulseSensor {
   public:
     // Constructs a PulseSensor manager using a default configuration.
-    PulseSensor(Adafruit_ADS1015 adc);
+    PulseSensor(Adafruit_ADS1015* adc);
 
     // Set up ADC (run in setup)
     bool begin();
@@ -77,7 +77,7 @@ class PulseSensor {
 
 
   private:
-    Adafruit_ADS1015 adc;
+    Adafruit_ADS1015* adc;
     // Configuration
     int InputPin;           // Analog input pin for PulseSensor.
     int BlinkPin;           // pin to blink in beat, or -1.

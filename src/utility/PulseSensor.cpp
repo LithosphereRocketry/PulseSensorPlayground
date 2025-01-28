@@ -33,7 +33,7 @@
    Constructs a Pulse detector that will process PulseSensor voltages
    that the caller reads from the PulseSensor.
 */
-PulseSensor::PulseSensor(Adafruit_ADS1015 adc): adc(adc) {
+PulseSensor::PulseSensor(Adafruit_ADS1015* adc): adc(adc) {
   // Initialize the default configuration
   InputPin = 0;
   BlinkPin = -1;
