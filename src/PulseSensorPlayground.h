@@ -144,8 +144,10 @@ class PulseSensorPlayground {
        1 millisecond is 1,000 microseconds.
 
        Refer to this value as PulseSensorPlayground::MICROS_PER_READ
+
+       *Downgraded to 100hz from 500 to make I2C easier.
     */
-    static const unsigned long MICROS_PER_READ = (2 * 1000L); // usecs per sample.
+    static const unsigned long MICROS_PER_READ = (10 * 1000L); // usecs per sample.
 
     //---------- PulseSensor Manager functions
 
