@@ -22,6 +22,8 @@ class PulseSensor {
   public:
     // Constructs a PulseSensor manager using a default configuration.
     PulseSensor(Adafruit_ADS1015* adc);
+    // Constructs a PulseSensor manager using an ADC.
+    PulseSensor(Adafruit_ADS1015* adc);
 
     // Set up ADC (run in setup)
     bool begin();

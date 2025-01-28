@@ -29,6 +29,17 @@
 #define FADE_LEVEL_PER_SAMPLE 12
 #define MAX_FADE_LEVEL (255 * FADE_SCALE)
 
+PulseSensor::PulseSensor(): adc(nullptr) {
+  // Initialize the default configuration
+  InputPin = 0;
+  BlinkPin = -1;
+  FadePin = -1;
+
+  // Initialize (seed) the pulse detector
+  sampleIntervalMs = PulseSensorPlayground::MICROS_PER_READ / 1000;
+	resetVariables();
+}
+
 /*
    Constructs a Pulse detector that will process PulseSensor voltages
    that the caller reads from the PulseSensor.
@@ -45,8 +56,11 @@ PulseSensor::PulseSensor(Adafruit_ADS1015* adc): adc(adc) {
 }
 
 bool PulseSensor::begin() {
-  adc.setGain(GAIN_ONE);
-  return adc.begin();
+  if(adc) {
+    adc.setGain(GAIN_ONE);
+    return adc.begin();
+  }
+  return true;
 }
 
 void PulseSensor::resetVariables(){
@@ -123,8 +137,12 @@ bool PulseSensor::isInsideBeat() {
 }
 
 void PulseSensor::readNextSample() {
-  // We assume assigning to an int is atomic.
-  Signal = adc.readADC_SingleEnded(InputPin);
+  if(adc) {
+    // We assume assigning to an int is atomic.
+    Signal = adc.readADC_SingleEnded(InputPin);
+  } else {
+    Signal = analogRead(InputPin);
+  }
 }
 
 void PulseSensor::processLatestSample() {
