@@ -460,6 +460,7 @@ bool enableInterrupt();
 #if PULSE_SENSOR_TIMING_ANALYSIS   // Don't use ram and flash we don't need.
     PulseSensorTimingStatistics *pTiming;
 #endif // PULSE_SENSOR_TIMING_ANALYSIS
+   Adafruit_ADS1015* adc;
 
 };
 

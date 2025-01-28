@@ -27,7 +27,7 @@
 #include "utility/TimerHandler.h"   
 #endif
 
-PulseSensorPlayground::PulseSensorPlayground(Adafruit_ADS1015* adc, int numberOfSensors) {
+PulseSensorPlayground::PulseSensorPlayground(Adafruit_ADS1015* adc, int numberOfSensors): adc(adc) {
   // Save a static pointer to our playground so the ISR can read it.
 #if USE_HARDWARE_TIMER    
   OurThis = this;
@@ -50,10 +50,7 @@ PulseSensorPlayground::PulseSensorPlayground(Adafruit_ADS1015* adc, int numberOf
 }
 
 bool PulseSensorPlayground::PulseSensorPlayground::begin() {
-  for(int i = 0; i < SensorCount; i++) {
-    Sensors[i].begin();
-  }
-
+  adc->begin();
   for (int i = 0; i < SensorCount; ++i) {
     Sensors[i].initializeLEDs();
   }

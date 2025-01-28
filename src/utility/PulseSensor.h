@@ -25,9 +25,6 @@ class PulseSensor {
     // Constructs a PulseSensor manager using an ADC.
     PulseSensor(Adafruit_ADS1015* adc);
 
-    // Set up ADC (run in setup)
-    bool begin();
-
 		// sets variables to default start values
 		void resetVariables();
 

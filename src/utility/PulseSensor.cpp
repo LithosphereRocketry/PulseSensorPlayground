@@ -55,14 +55,6 @@ PulseSensor::PulseSensor(Adafruit_ADS1015* adc): adc(adc) {
 	resetVariables();
 }
 
-bool PulseSensor::begin() {
-  if(adc) {
-    adc->setGain(GAIN_ONE);
-    return adc->begin();
-  }
-  return true;
-}
-
 void PulseSensor::resetVariables(){
 	for (int i = 0; i < 10; ++i) {
     rate[i] = 0;
