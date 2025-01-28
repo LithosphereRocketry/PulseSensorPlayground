@@ -31,7 +31,7 @@
 
 PulseSensor::PulseSensor(): adc(nullptr) {
   // Initialize the default configuration
-  InputPin = 0;
+  InputPin = A0;
   BlinkPin = -1;
   FadePin = -1;
 
@@ -57,8 +57,8 @@ PulseSensor::PulseSensor(Adafruit_ADS1015* adc): adc(adc) {
 
 bool PulseSensor::begin() {
   if(adc) {
-    adc.setGain(GAIN_ONE);
-    return adc.begin();
+    adc->setGain(GAIN_ONE);
+    return adc->begin();
   }
   return true;
 }
@@ -139,7 +139,7 @@ bool PulseSensor::isInsideBeat() {
 void PulseSensor::readNextSample() {
   if(adc) {
     // We assume assigning to an int is atomic.
-    Signal = adc.readADC_SingleEnded(InputPin);
+    Signal = adc->readADC_SingleEnded(InputPin);
   } else {
     Signal = analogRead(InputPin);
   }
