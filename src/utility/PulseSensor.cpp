@@ -33,15 +33,20 @@
    Constructs a Pulse detector that will process PulseSensor voltages
    that the caller reads from the PulseSensor.
 */
-PulseSensor::PulseSensor() {
+PulseSensor::PulseSensor(Adafruit_ADS1015 adc): adc(adc) {
   // Initialize the default configuration
-  InputPin = A0;
+  InputPin = 0;
   BlinkPin = -1;
   FadePin = -1;
 
   // Initialize (seed) the pulse detector
   sampleIntervalMs = PulseSensorPlayground::MICROS_PER_READ / 1000;
 	resetVariables();
+}
+
+bool PulseSensor::begin() {
+  adc.setGain(GAIN_ONE);
+  return adc.begin();
 }
 
 void PulseSensor::resetVariables(){
@@ -54,8 +59,9 @@ void PulseSensor::resetVariables(){
   Pulse = false;
   sampleCounter = 0;
   lastBeatTime = 0;
-  P = 512;                    // peak at 1/2 the input range of 0..1023
-  T = 512;                    // trough at 1/2 the input range.
+  // LSB is 2mV with this ADC setting, so half range is (3300mV / 2) / 2
+  P = 3300/2 / 2;                 // peak at 1/2 the input range of 0..(3300/2)
+  T = 3300/2 / 2;                 // trough at 1/2 the input range.
   thresh = threshSetting;     // reset the thresh variable with user defined THRESHOLD
   amp = 100;                  // beat amplitude 1/10 of input range.
   firstBeat = true;           // looking for the first beat
@@ -118,7 +124,7 @@ bool PulseSensor::isInsideBeat() {
 
 void PulseSensor::readNextSample() {
   // We assume assigning to an int is atomic.
-  Signal = analogRead(InputPin);
+  Signal = adc.readADC_SingleEnded(InputPin);
 }
 
 void PulseSensor::processLatestSample() {
