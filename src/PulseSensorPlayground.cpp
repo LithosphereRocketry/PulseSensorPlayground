@@ -50,7 +50,8 @@ PulseSensorPlayground::PulseSensorPlayground(Adafruit_ADS1015* adc, int numberOf
 }
 
 bool PulseSensorPlayground::PulseSensorPlayground::begin() {
-  adc->begin();
+  if(adc && !adc->begin()) return false;
+
   for (int i = 0; i < SensorCount; ++i) {
     Sensors[i].initializeLEDs();
   }
